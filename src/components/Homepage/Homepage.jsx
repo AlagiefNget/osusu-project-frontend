@@ -15,13 +15,26 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import GroupIcon from "@mui/icons-material/Group";
+import PaidIcon from "@mui/icons-material/Paid";
+import AddIcon from '@mui/icons-material/Add';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import {
+  Routes,
+  Route,
+  Link} from "react-router-dom";
+import Dashboard from "../Dashboard/Dashboard";
+import Members from "../Members/Members";
+import AddMember from "../Forms/AddMember";
+import MemberDetails from "../Members/MemberDetails";
 
 const drawerWidth = 240;
 
@@ -73,6 +86,14 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const sideBarElements = [
+  { text: "Dashboard", Icon: DashboardIcon, path: "/" },
+  { text: "Members", Icon: GroupIcon, path: "/members"},
+  { text: "Payments", Icon: PaidIcon, path: "/payments" },
+  { text: "Reports", Icon: AssessmentIcon, path: "/reports" },
+  { text: "Settings", Icon: SettingsApplicationsIcon, path: "/settings" }
+];
+
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -93,7 +114,8 @@ const Drawer = styled(MuiDrawer, {
 const Homepage = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const [openAddMember, setOpenAddMember] = React.useState(false);
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -199,6 +221,10 @@ const Homepage = () => {
     </Menu>
   );
 
+  const closeAddMember = () =>{
+    setOpenAddMember(false);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -221,6 +247,15 @@ const Homepage = () => {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              title="Add New Member"
+              onClick={() => setOpenAddMember(true)}
+            >
+              <AddIcon />
+            </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
@@ -256,8 +291,8 @@ const Homepage = () => {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Dashboard", "Members", "Payments", "Projects/Goals"].map(
-            (text, index) => (
+          {sideBarElements.map(({ text, Icon, path }, index) => (
+            <Link to={path} style={{ textDecoration: 'none', color: 'black' }}>
               <ListItemButton
                 key={text}
                 sx={{
@@ -273,48 +308,27 @@ const Homepage = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {<Icon />}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
-            )
-          )}
+            </Link>
+          ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/members/:id" element={<MemberDetails />} />
+          <Route path="/members" element={<Members />} />
+          <Route path="/payments" element={<Members />} />
+          <Route path="/settings" element={<Members />} />
+        </Routes>
       </Box>
       {renderMobileMenu}
       {renderMenu}
+      { openAddMember ? <AddMember openAddMember={openAddMember} closeAddMember={closeAddMember} /> : null }
     </Box>
   );
 };
