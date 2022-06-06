@@ -5,6 +5,7 @@ import DataTable from '../DataTable/DataTable';
 import PreviewIcon from '@mui/icons-material/Preview';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useNavigate } from 'react-router-dom';
+// import {members } from '../../services/Mer';
 
 const Members = () => {
   const [membersData, setMembersData] = useState(
@@ -53,9 +54,7 @@ const Members = () => {
   ];
 
   const viewDetails = (rowData) => {
-    navigate(`/members/${rowData.name}`);
-    // <Navigate to="/member-details" replace={true} />
-    console.log({ rowData })
+    navigate(`/members/${rowData.phone}`);
   }
 
   return (

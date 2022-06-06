@@ -2,6 +2,7 @@ import React from "react";
 import CardComponent from "../Card/Card";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Budget from "./Budget";
 
 
 const Dashboard = () => {
@@ -11,6 +12,7 @@ const Dashboard = () => {
         <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{marginBottom: 30}}>
           <Grid item xs={3}>
               <CardComponent title={"Total Members"} total={25} color={"red"} people={true} />
+              {/* <Budget /> */}
           </Grid>
           <Grid item xs={3}>
               <CardComponent title={"Arrears"} total={3500} color={"red"} />
@@ -36,6 +38,11 @@ const Dashboard = () => {
               <CardComponent title={"Fund"} total={4500} color={"blue"} amount_collected={true} />
           </Grid>
         </Grid>
+        {/* <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+          <Grid item xs={3}>
+              <Budget />
+          </Grid>
+        </Grid> */}
       </Box>
     </>
   );

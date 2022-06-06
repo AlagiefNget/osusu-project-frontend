@@ -30,11 +30,15 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import {
   Routes,
   Route,
-  Link} from "react-router-dom";
+  Link,
+  useNavigate} from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
 import Members from "../Members/Members";
 import AddMember from "../Forms/AddMember";
 import MemberDetails from "../Members/MemberDetails";
+import Profile from '../Account';
+import Settings from "../../pages/Settings";
+import Payments from "../../pages/Payments/Payments";
 
 const drawerWidth = 240;
 
@@ -115,7 +119,8 @@ const Homepage = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [openAddMember, setOpenAddMember] = React.useState(false);
-  
+  const navigate = useNavigate();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -199,6 +204,12 @@ const Homepage = () => {
     </Menu>
   );
 
+  const handleProfile = () =>{
+    navigate("/profile");
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -216,7 +227,7 @@ const Homepage = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -255,15 +266,6 @@ const Homepage = () => {
               onClick={() => setOpenAddMember(true)}
             >
               <AddIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
             </IconButton>
             <IconButton
               size="large"
@@ -307,6 +309,7 @@ const Homepage = () => {
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
                   }}
+                  key={text}
                 >
                   {<Icon />}
                 </ListItemIcon>
@@ -322,8 +325,9 @@ const Homepage = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/members/:id" element={<MemberDetails />} />
           <Route path="/members" element={<Members />} />
-          <Route path="/payments" element={<Members />} />
-          <Route path="/settings" element={<Members />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Box>
       {renderMobileMenu}

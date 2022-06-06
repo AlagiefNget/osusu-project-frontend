@@ -11,7 +11,6 @@ import CardHeader from '@mui/material/CardHeader';
 import { red } from '@mui/material/colors';
 
 const CardComponent = (props) => {
-    console.log(props)
     const {title, total, color, people, amount_collected} = props
   return (
     // <Card sx={{ maxWidth: 345 }} style={{backgroundColor: color, color: "white"}}>
