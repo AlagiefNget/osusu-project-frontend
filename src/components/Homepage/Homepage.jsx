@@ -36,7 +36,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import Members from "../Members/Members";
 import AddMember from "../Forms/AddMember";
 import MemberDetails from "../Members/MemberDetails";
-import Profile from '../Account';
+import Profile from '../Account/Account';
 import Settings from "../../pages/Settings";
 import Payments from "../../pages/Payments/Payments";
 
@@ -121,6 +121,10 @@ const Homepage = () => {
   const [openAddMember, setOpenAddMember] = React.useState(false);
   const navigate = useNavigate();
 
+  React.useEffect(() =>{
+    checkLoggedIn();
+  });
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -151,6 +155,14 @@ const Homepage = () => {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const checkLoggedIn = () => {
+    setInterval(() => {
+        if(localStorage.getItem("userOrgId") === null){
+          navigate("/login", { replace: true });
+        }
+    }, 2000);
+  }
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -208,7 +220,18 @@ const Homepage = () => {
     navigate("/profile");
     setAnchorEl(null);
     handleMobileMenuClose();
+    handleMenuClose();
   };
+
+  const handleLogout = () =>{
+    localStorage.clear();
+    navigate("/logout");
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    handleMenuClose()
+  };
+
+  
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -228,7 +251,7 @@ const Homepage = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleProfile}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 

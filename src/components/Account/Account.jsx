@@ -1,9 +1,34 @@
+import { useState, useEffect } from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import AccountProfile from './AccountProfile';
 import AccountProfileDetails from './AccountProfileDetails';
+import MemberService from "../../services/MemberService";
 
-const Account = () => (
-  <>
+const Account = () => {
+  const [memberData, setMemberData] = useState({
+    name: "",
+    address: "",
+    phone: "",
+    email: ""
+  });
+  
+  useEffect(() => {
+    console.log(localStorage.getItem("memberId"))
+    MemberService.loadMemberDetails(localStorage.getItem("memberId"), getMemberDetails);
+  },[]);
+
+  const getMemberDetails = (data) => {
+    setMemberData({...data});
+  };
+
+  const handleChange = (event) => {
+    setMemberData({
+      ...memberData,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  return (
     <Box
       component="main"
       sx={{
@@ -28,7 +53,7 @@ const Account = () => (
             md={6}
             xs={12}
           >
-            <AccountProfile />
+            <AccountProfile memberData={memberData} />
           </Grid>
           <Grid
             item
@@ -36,12 +61,12 @@ const Account = () => (
             md={6}
             xs={12}
           >
-            <AccountProfileDetails />
+            <AccountProfileDetails memberData={memberData} handleChangeInfo={handleChange} />
           </Grid>
         </Grid>
       </Container>
     </Box>
-  </>
-);
+  );
+};
 
 export default Account;

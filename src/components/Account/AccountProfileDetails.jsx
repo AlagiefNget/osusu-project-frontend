@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Box,
   Button,
@@ -10,36 +9,11 @@ import {
   TextField
 } from '@mui/material';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
-
 const AccountProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Salimina',
-    lastName: 'Sillah',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
 
+  const {memberData, handleChangeInfo} = props;
   const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
+    handleChangeInfo(event.target.name, event.target.value);
   };
 
   return (
@@ -66,12 +40,11 @@ const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
+                label="Name"
+                name="name"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={memberData && memberData.name}
                 variant="outlined"
               />
             </Grid>
@@ -82,11 +55,11 @@ const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                label="Last name"
-                name="lastName"
+                label="Address"
+                name="address"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={memberData && memberData.address}
                 variant="outlined"
               />
             </Grid>
@@ -97,11 +70,11 @@ const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                label="Email Address"
+                label="Email"
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={memberData && memberData.email}
                 variant="outlined"
               />
             </Grid>
@@ -115,51 +88,9 @@ const AccountProfileDetails = (props) => {
                 label="Phone Number"
                 name="phone"
                 onChange={handleChange}
-                type="number"
-                value={values.phone}
+                value={memberData && memberData.phone}
                 variant="outlined"
               />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
             </Grid>
           </Grid>
         </CardContent>

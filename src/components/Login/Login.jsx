@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import MemberService from '../../services/MemberService';
 
 function Copyright(props) {
   return (
@@ -29,14 +31,33 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Login = () => {
+
+  const navigate = useNavigate();
+  const [memberCredentials, setMemberCredentials] = useState({email: "", password: ""});
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setMemberCredentials({...memberCredentials, [name]: value})
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    let {email, password} = memberCredentials;
+    email = email.trim()
+    password = password.trim();
+
+    MemberService.login({email, password}, isLoggedIn);
+    
   };
+
+  const isLoggedIn = () =>{
+    if(localStorage.getItem("userOrgId")){
+      navigate("/ ", { replace: true });
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,6 +87,8 @@ const Login = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              value={memberCredentials.email}
+              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -75,7 +98,8 @@ const Login = () => {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              value={memberCredentials.password}
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -96,7 +120,7 @@ const Login = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

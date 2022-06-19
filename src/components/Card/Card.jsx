@@ -11,7 +11,7 @@ import CardHeader from '@mui/material/CardHeader';
 import { red } from '@mui/material/colors';
 
 const CardComponent = (props) => {
-    const {title, total, color, people, amount_collected} = props
+    const {title, total, color, people, amount_collected, addSubHeader} = props
   return (
     // <Card sx={{ maxWidth: 345 }} style={{backgroundColor: color, color: "white"}}>
     <Card sx={{ maxWidth: 345 }}>
@@ -23,7 +23,7 @@ const CardComponent = (props) => {
           </Avatar>
         }
         title={title}
-        subheader= { amount_collected ? "June 31, 2022" : ""}
+        subheader= { amount_collected || addSubHeader ? "June, 2022" : ""}
       />
       <CardContent>
         <Typography variant="h6" color="text.secondary">

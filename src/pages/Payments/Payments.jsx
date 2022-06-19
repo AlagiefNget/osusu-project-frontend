@@ -27,14 +27,17 @@ const Payments = () => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{marginBottom: 30}}>
-          <Grid item xs={4}>
-              <CardComponent title={"Collected Amount"} total={3500} color={"red"} />
+          <Grid item xs={3}>
+              <CardComponent title={"Collected Amount"} total={3500} color={"red"} addSubHeader />
           </Grid>
-          <Grid item xs={4}>
-              <CardComponent title={"Total Paid"} total={25} color={"red"} people={true} />
+          <Grid item xs={3}>
+              <CardComponent title={"Total Paid"} total={15} color={"red"} people={true} addSubHeader />
           </Grid>
-          <Grid item xs={4}>
-              <CardComponent title={"Total Non-Paid"} total={7000} color={"red"} />
+          <Grid item xs={3}>
+              <CardComponent title={"Balance"} total={7000} color={"red"} addSubHeader />
+          </Grid>
+          <Grid item xs={3}>
+              <CardComponent title={"Non Paid"} total={5} color={"red"} people={true} addSubHeader />
           </Grid>
         </Grid>
         <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}>

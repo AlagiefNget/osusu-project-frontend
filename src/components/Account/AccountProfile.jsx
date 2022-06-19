@@ -41,14 +41,14 @@ const AccountProfile = (props) => (
           gutterBottom
           variant="h5"
         >
-          {user.name}
+          {props.memberData && props.memberData.name}
         </Typography>
-        <Typography
+        {/* <Typography
           color="textSecondary"
           variant="body2"
         >
           {`${user.city}`}
-        </Typography>
+        </Typography> */}
         {/* <Typography
           color="textSecondary"
           variant="body2"
